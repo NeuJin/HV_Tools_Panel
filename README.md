@@ -23,6 +23,21 @@ Technostar Co., Ltd (Outsourced to Suzuki Motor Corporation)
    hw.exe <model_or_session> -tcl <path>/HVTools_Panel.tcl
    ```
 
+### Menu-bar integration (no more typing `source`)
+
+`hvtools_menu.tcl` registers an **"HV Tools Panel"** entry under
+**Applications → Tools** (next to HvTrans / HwLogViewer) — clicking it
+opens the combined panel. Once per session:
+```tcl
+source <path>/hvtools_menu.tcl
+```
+or make it permanent by launching HyperView through a desktop shortcut:
+```
+hw.exe -tcl <path>/hvtools_menu.tcl
+```
+(the script retries during startup until the menu bar exists, is safe to
+re-source, and finds the menu dynamically — no hardcoded widget paths).
+
 ## The combined panel (`HVTools_Panel.tcl`)
 
 - **0. Load model & results** (shared, top): one model file for every
@@ -41,6 +56,7 @@ Technostar Co., Ltd (Outsourced to Suzuki Motor Corporation)
 | File | Role |
 |------|------|
 | `HVTools_Panel.tcl` | ★ Combined tabbed panel (this is the one to source) |
+| `hvtools_menu.tcl` | ★ Adds "HV Tools Panel" to the Applications → Tools menu |
 | `maxstress_lib.tcl` | Max Stress logic (export / annotate / re-query / load) |
 | `safetyfactor_lib.tcl` | Safety Factor logic |
 | `MaxStress_Panel.tcl` / `SafetyFactor_Panel.tcl` | Standalone single-tool panels |
