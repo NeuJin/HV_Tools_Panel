@@ -7,9 +7,12 @@
 > (nhánh `feat/multi-window-summary`) để biết kiến trúc/gotchas/lịch sử
 > đầy đủ — file này chỉ ghi quy trình deploy.
 >
-> **Trạng thái zip mới nhất: v1.14** (commit `7f3d708`), chứa 13 file, đã
-> push lên `main`. Repo này KHÔNG dùng feature branch — mọi commit thẳng
-> vào `main` vì bản chất chỉ là snapshot đóng gói.
+> **Trạng thái zip mới nhất: v1.26** (commit `54f6a58`, 2026-07-15), chứa 13
+> file, đã push lên `main`. Fix nội dung: legend on/off không apply do
+> `leg SetVisibility` cần literal string `"true"`/`"false"`, không nhận
+> Tcl-boolean `"1"`/`"0"` từ Tk checkbutton — đã normalize trong
+> `ApplyDisplay` ở cả 2 lib. Repo này KHÔNG dùng feature branch — mọi commit
+> thẳng vào `main` vì bản chất chỉ là snapshot đóng gói.
 
 ---
 
