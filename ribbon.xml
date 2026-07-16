@@ -8,13 +8,21 @@
   working on a real 2025.1 install 2026-07-16 (the "HV Tools" tab
   appeared correctly after the extension.xml profile-nesting fix).
 
-  Still being tuned: the "Launch" actiongroup rendered as an empty box
-  with no visible button — likely because the spriteaction had no
-  "image" attribute (HW's ribbon renderer may require one to allocate
-  a visible icon+label button). Added image="hvtools_icon.png" below,
-  paired with extension.xml's new resources="images" entry (matches
-  Altair's own Extension Demo convention: an images/ folder next to
-  extension.xml, referenced by filename only in ribbon.xml).
+  Fixed: the "Launch" actiongroup first rendered as an empty box with
+  no visible button;fixed by adding image="hvtools_icon.png" below,
+  paired with extension.xml's resources="images" entry (matches
+  Altair's own Extension Demo convention).
+
+  Still being tuned: button now renders (icon + "Launch" label
+  visible, confirmed 2026-07-16) but clicking it does nothing;no
+  error shown anywhere. Likely cause: $::HVToolsExtDir (set by
+  global-init.tcl) isn't visible in whatever Tcl context ribbon
+  commands execute in. Added a per-profile tclscript entry in
+  extension.xml (re-runs global-init.tcl, matching the Extension
+  Demo's two-tier init pattern) as a first attempt at a fix, AND
+  wrapped this command in a catch + tk_messageBox so any failure is
+  visible instead of silent;if it still doesn't work, the message
+  box should now say exactly why.
 
   This file lives FLAT alongside HVTools_Panel.tcl and the other 15
   deploy files (same folder as everything else in the zip) — NOT in a
@@ -29,7 +37,7 @@
     <spriteaction tag="HVTools_Open" text="HV Tools Panel"
       tooltip="Open the HV Tools Panel (Max Stress sweep + Safety Factor)"
       image="hvtools_icon.png"
-      command="tcl: source [file join $::HVToolsExtDir HVTools_Panel.tcl]"/>
+      command="tcl: if {![info exists ::HVToolsExtDir]} { tk_messageBox -icon error -title {HV Tools} -message {HVToolsExtDir not set. global-init.tcl did not run in this context.} } elseif {[catch {source [file join $::HVToolsExtDir HVTools_Panel.tcl]} err]} { tk_messageBox -icon error -title {HV Tools} -message [format {Error: %s} $err] }"/>
   </actionlist>
 
   <page tag="HVTools_Page" text="HV Tools">

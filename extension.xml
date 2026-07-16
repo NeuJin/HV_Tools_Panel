@@ -28,5 +28,6 @@
 
     <section name="profile" value="HyperView">
         <entry name="ribbonxml" value="ribbon.xml" />
+        <entry name="tclscript" value="global-init.tcl" />
     </section>
 </section>
