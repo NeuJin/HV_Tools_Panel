@@ -24,6 +24,7 @@
     <entry name="description" value="Max Stress sweep + Safety Factor automation panel for HyperView (Tcl)" />
     <entry name="supportedClient" value="HyperWorksDesktop" />
     <entry name="tclscript" value="global-init.tcl" />
+    <entry name="resources" value="images" />
 
     <section name="profile" value="HyperView">
         <entry name="ribbonxml" value="ribbon.xml" />

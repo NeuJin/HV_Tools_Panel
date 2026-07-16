@@ -1,15 +1,20 @@
 <!--
   ribbon.xml — custom ribbon page for HW 2025.1+ (compat/hv2025.1).
 
-  EXPERIMENTAL, not yet console-verified. Adds one new top-level ribbon
-  tab "HV Tools" with a single button that opens HVTools_Panel.tcl (the
-  combined Max Stress + Safety Factor panel). Schema per Altair's
-  official "Ribbons XML" reference (actionlist/spriteaction + page/
-  group/actiongroup). The "image" attribute is omitted on the
-  spriteaction below since we don't yet know this app's icon-asset
-  convention on a real 2025.1 install — if the button fails to render
-  or errors without one, that's the next thing to fix once we see it
-  live.
+  Adds one new top-level ribbon tab "HV Tools" with a single button
+  that opens HVTools_Panel.tcl (the combined Max Stress + Safety
+  Factor panel). Schema per Altair's official "Ribbons XML" reference
+  (actionlist/spriteaction + page/group/actiongroup) — CONFIRMED
+  working on a real 2025.1 install 2026-07-16 (the "HV Tools" tab
+  appeared correctly after the extension.xml profile-nesting fix).
+
+  Still being tuned: the "Launch" actiongroup rendered as an empty box
+  with no visible button — likely because the spriteaction had no
+  "image" attribute (HW's ribbon renderer may require one to allocate
+  a visible icon+label button). Added image="hvtools_icon.png" below,
+  paired with extension.xml's new resources="images" entry (matches
+  Altair's own Extension Demo convention: an images/ folder next to
+  extension.xml, referenced by filename only in ribbon.xml).
 
   This file lives FLAT alongside HVTools_Panel.tcl and the other 15
   deploy files (same folder as everything else in the zip) — NOT in a
@@ -23,6 +28,7 @@
   <actionlist>
     <spriteaction tag="HVTools_Open" text="HV Tools Panel"
       tooltip="Open the HV Tools Panel (Max Stress sweep + Safety Factor)"
+      image="hvtools_icon.png"
       command="tcl: source [file join $::HVToolsExtDir HVTools_Panel.tcl]"/>
   </actionlist>
 
