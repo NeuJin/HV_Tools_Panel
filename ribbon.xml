@@ -18,8 +18,18 @@
   together with a duplicate per-profile tclscript entry in
   extension.xml — that combination crashed HW on the real 2025.1
   install. Reverted the command back to this simple, confirmed-non-
-  crashing one-liner to isolate which change was actually responsible
-  before retrying either piece separately.
+  crashing one-liner, and clicking STILL does nothing (no error, no
+  crash);so the original silent-no-op problem was never actually
+  about tk_messageBox or the duplicate tclscript, both are red
+  herrings from the crash detour.
+
+  Now adding minimal, low-risk diagnostics only (plain `puts`, no
+  tk_messageBox, no duplicate tclscript, no if/elseif branching;just
+  semicolon-separated statements) to find out, without risking another
+  crash, whether the click even reaches Tcl at all and whether
+  ::HVToolsExtDir exists in that context. Check the Tcl Command
+  Window / message log after clicking for lines starting
+  "HVTOOLS_CLICK" and "HVTOOLS_RESULT".
 
   This file lives FLAT alongside HVTools_Panel.tcl and the other 15
   deploy files (same folder as everything else in the zip) — NOT in a
@@ -34,7 +44,7 @@
     <spriteaction tag="HVTools_Open" text="HV Tools Panel"
       tooltip="Open the HV Tools Panel (Max Stress sweep + Safety Factor)"
       image="hvtools_icon.png"
-      command="tcl: source [file join $::HVToolsExtDir HVTools_Panel.tcl]"/>
+      command="tcl: puts [list HVTOOLS_CLICK exists [info exists ::HVToolsExtDir]] ; catch {source [file join $::HVToolsExtDir HVTools_Panel.tcl]} err ; puts [list HVTOOLS_RESULT $err]"/>
   </actionlist>
 
   <page tag="HVTools_Page" text="HV Tools">
