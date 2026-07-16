@@ -15,6 +15,14 @@
   extension.xml file itself, and NOT via "Import ribbon from XML" /
   "Import Custom Pages" (a different, unrelated GUI feature that does
   not read this manifest or run global-init.tcl).
+
+  REVERTED 2026-07-16: briefly added a per-profile tclscript entry
+  here (pointing at the same global-init.tcl as the top-level one, to
+  match the Extension Demo's two-tier init pattern) alongside a more
+  complex ribbon.xml button command; that combination made HW crash
+  on the real 2025.1 install. Reverted both changes back to this
+  simpler, confirmed-non-crashing shape to isolate the cause before
+  retrying either piece separately.
 -->
 <section name="Extension">
     <entry name="name" value="HVToolsPanel" />
@@ -28,6 +36,5 @@
 
     <section name="profile" value="HyperView">
         <entry name="ribbonxml" value="ribbon.xml" />
-        <entry name="tclscript" value="global-init.tcl" />
     </section>
 </section>
