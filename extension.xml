@@ -1,0 +1,31 @@
+<!--
+  extension.xml — HyperWorks Extension manifest (compat/hv2025.1).
+
+  Schema CONFIRMED 2026-07-16 by reading Altair's own "Extension Demo"
+  extension.xml on a real 2025.1 install: ribbonxml/tclscript/toolbars/
+  filemenu must live inside a <section name="profile" value="...">
+  block (HyperMesh/HyperView/HyperGraph) — a flat top-level ribbonxml
+  entry is silently ignored (no error, extension "loads" per Details
+  panel, but the ribbon page never appears). That was the bug in the
+  previous version of this file.
+
+  Register via File > Extensions (opens Extension Manager) > Add
+  Extension > browse to and select the FOLDER this file lives in (the
+  whole deploy folder, alongside HVTools_Panel.tcl etc.) — NOT the
+  extension.xml file itself, and NOT via "Import ribbon from XML" /
+  "Import Custom Pages" (a different, unrelated GUI feature that does
+  not read this manifest or run global-init.tcl).
+-->
+<section name="Extension">
+    <entry name="name" value="HVToolsPanel" />
+    <entry name="displayName" value="HV Tools Panel" />
+    <entry name="version" value="1.0" />
+    <entry name="author" value="Nguyen Tan Loc" />
+    <entry name="description" value="Max Stress sweep + Safety Factor automation panel for HyperView (Tcl)" />
+    <entry name="supportedClient" value="HyperWorksDesktop" />
+    <entry name="tclscript" value="global-init.tcl" />
+
+    <section name="profile" value="HyperView">
+        <entry name="ribbonxml" value="ribbon.xml" />
+    </section>
+</section>

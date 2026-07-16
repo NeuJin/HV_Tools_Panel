@@ -1,0 +1,36 @@
+<!--
+  ribbon.xml — custom ribbon page for HW 2025.1+ (compat/hv2025.1).
+
+  EXPERIMENTAL, not yet console-verified. Adds one new top-level ribbon
+  tab "HV Tools" with a single button that opens HVTools_Panel.tcl (the
+  combined Max Stress + Safety Factor panel). Schema per Altair's
+  official "Ribbons XML" reference (actionlist/spriteaction + page/
+  group/actiongroup). The "image" attribute is omitted on the
+  spriteaction below since we don't yet know this app's icon-asset
+  convention on a real 2025.1 install — if the button fails to render
+  or errors without one, that's the next thing to fix once we see it
+  live.
+
+  This file lives FLAT alongside HVTools_Panel.tcl and the other 15
+  deploy files (same folder as everything else in the zip) — NOT in a
+  subfolder. Register the whole deploy folder itself via File >
+  Extensions > Add Extension in HyperWorks (browse to the FOLDER, not
+  to extension.xml directly) — NOT via "Import ribbon from XML" /
+  "Import Custom Pages", which is a different, unrelated GUI feature
+  that doesn't read extension.xml or run global-init.tcl at all.
+-->
+<root>
+  <actionlist>
+    <spriteaction tag="HVTools_Open" text="HV Tools Panel"
+      tooltip="Open the HV Tools Panel (Max Stress sweep + Safety Factor)"
+      command="tcl: source [file join $::HVToolsExtDir HVTools_Panel.tcl]"/>
+  </actionlist>
+
+  <page tag="HVTools_Page" text="HV Tools">
+    <group tag="HVTools_G" text="Panel">
+      <actiongroup tag="HVTools_AG" text="Launch">
+        <spriteaction actiontag="HVTools_Open"/>
+      </actiongroup>
+    </group>
+  </page>
+</root>
